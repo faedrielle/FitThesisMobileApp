@@ -1,0 +1,8 @@
+rootProject.name='ThesisFitApp'
+include ':app'
+
+include ':accessory-v2.6.1.jar'
+project(':accessory-v2.6.1.jar').projectDir = new File('/app/libs/accessory-v2.6.1')
+
+include ':sdk-v1.0.0.jar'
+project(':sdk-v1.0.0.jar').projectDir = new File('/app/libs/sdk-v1.0.0')
