@@ -3,13 +3,11 @@ package com.example.thesisfitapp;
 import android.bluetooth.*;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
+import android.os.*;
 import android.util.Log;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,7 +44,11 @@ public class MainActivity extends AppCompatActivity {
         if (smartwatch.equals(null)) {
             return;
         }
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         (new AcceptThread()).run();
     }
 
@@ -164,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         Log.e(TAG, "Socket's close() method failed", e);
                     }
-                    break;
                 }
             }
         }
@@ -232,12 +233,12 @@ public class MainActivity extends AppCompatActivity {
                             MessageConstants.MESSAGE_READ, numBytes, -1,
                             mmBuffer);
                     readMsg.sendToTarget();*/
-                    String input = new String(Arrays.copyOfRange(mmBuffer, 0, numBytes-1));
-                    Log.i(TAG, "Read input: " + numBytes + "bytes, message: " + input);
                 } catch (IOException e) {
                     Log.d(TAG, "Input stream was disconnected", e);
                     break;
                 }
+                String input = new String(Arrays.copyOfRange(mmBuffer, 0, numBytes-1));
+                Log.i(TAG, "Read input: " + numBytes + "bytes, message: " + input);
             }
         }
 
